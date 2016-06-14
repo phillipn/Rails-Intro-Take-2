@@ -11,7 +11,17 @@ class MoviesController < ApplicationController
   end
 
   def index
+    @all_ratings = Movie.all_ratings
+    
+    if params["ratings"].blank?
+      @ratings_filter = @all_ratings
+    else
+      @ratings_filter = params["ratings"].keys
+    end
+    
     @movies = Movie.all
+    @movies = @movies.order(params[:sort] + " " + params[:direction]) if params[:sort] && params[:direction]
+    @movies = @movies.where("rating IN (?)", @ratings_filter)
   end
 
   def new
