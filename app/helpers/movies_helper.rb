@@ -10,14 +10,10 @@ module MoviesHelper
   end
   
   def highlighted?(sort)
-    'hilite' if params[:sort] == sort
+    'hilite' if session[:sort] == sort
   end
   
   def check_if_true(params, rating)
-      if params.include?(rating)
-        return true
-      else 
-        return false
-      end
-    end
+    params.include?(rating) ? true : false
+  end
 end
